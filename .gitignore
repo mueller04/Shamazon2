@@ -6,3 +6,6 @@
 *.iml
 *.iws
 /out/
+
+build/
+gradle-wrapper.properties
