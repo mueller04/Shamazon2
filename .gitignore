@@ -1,0 +1,8 @@
+.DS_Store
+.gradle/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+/out/
