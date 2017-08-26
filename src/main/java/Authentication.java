@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 public class Authentication {
 
-    HashMap<String, String> users = new HashMap();
-    Scanner sc = new Scanner(System.in);
+    private HashMap<String, String> users = new HashMap();
+    private Scanner sc = new Scanner(System.in);
+    private boolean loginRequired = false;
 
     public Authentication() {
         users.put("Mike", "password");
@@ -13,6 +14,10 @@ public class Authentication {
     }
 
     public boolean login() {
+
+        if (!loginRequired) {
+            return true;
+        }
 
         if (checkUserName()) {
             return checkPassword();

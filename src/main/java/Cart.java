@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Cart {
 
     ArrayList<Product> productsInCart = new ArrayList<>();
-    Scanner sc = new Scanner(System.in);
+    protected final transient Scanner sc = new Scanner(System.in);
 
     public void manageCart(Product productSelected) {
 

@@ -1,5 +1,6 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import com.google.gson.Gson;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -62,6 +63,23 @@ public class Application {
         boolean cartToBeSaved = currentCart.manage();
         if (cartToBeSaved) {
             cartList.add(currentCart);
+
+            Gson gson = new Gson();
+
+            String cartJSON = gson.toJson(currentCart);
+
+            writeToFile(cartJSON);
+        }
+    }
+
+    private void writeToFile(String cartJSON) {
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("cart.json"), "utf-8"))) {
+
+            writer.write(cartJSON);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -71,20 +89,6 @@ public class Application {
         int cartIndex = sc.nextInt();
         if (cartList.size() >= cartIndex) {
             currentCart = cartList.get(cartIndex - 1);
-
-
-//            JSONArray jsonArray = new JSONArray();
-//            GSON gson = new GSON();
-
-
-            try {
-                FileWriter file = new FileWriter("./Files/cart.json");
-
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
         }
     }
