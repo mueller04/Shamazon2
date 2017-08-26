@@ -39,9 +39,10 @@ public class Application {
                     "\n2 - manage your cart" +
                     "\n3 - create a new cart" +
                     "\n4 - select a cart" +
-                    "\n5 - exit Shamazon");
+                    "\n5 - load cart from file" +
+                    "\n6 - exit Shamazon");
             int selection = sc.nextInt();
-            if (selection == 5) {
+            if (selection == 6) {
                 keepRunningShamazon = false;
                 keepRunning = false;
                 System.out.println("Exiting Shamazon...");
@@ -54,9 +55,50 @@ public class Application {
                 System.out.println("New Cart Created!\n");
             } else if (selection == 4) {
                 selectCart(cartList, sc);
+            } else if (selection ==5) {
+                readFromFile();
             }
         }
         return keepRunningShamazon;
+    }
+
+    private void readFromFile() {
+        Gson gson = new Gson();
+
+        BufferedReader reader = getReaderForFile();
+
+        String contentsStr = getFileAsString(reader);
+
+        currentCart = gson.fromJson(contentsStr, Cart.class);
+
+        for (Product product : currentCart.productsInCart) {
+            System.out.println(product.name);
+            System.out.println(product.description);
+            System.out.println(product.price + "\n");
+        }
+    }
+
+    private String getFileAsString(BufferedReader reader) {
+        StringBuilder builder = new StringBuilder();
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return builder.toString();
+    }
+
+    private BufferedReader getReaderForFile() {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("cart.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return reader;
     }
 
     private void saveCart(ArrayList<Cart> cartList) {
